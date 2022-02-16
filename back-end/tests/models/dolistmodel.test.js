@@ -1,7 +1,7 @@
 const sinon = require('sinon');
-const { expect } = require('chai');
-const { MongoClient } = require('mongodb');
-const { getConnection } = require('./mongomockconnection');
+const {expect} = require('chai');
+const {MongoClient} = require('mongodb');
+const {getConnection} = require('../mongomockconnection');
 
 const listModel = require('../../models/dolistmodel');
 
@@ -12,7 +12,7 @@ describe('Insere um nova lista no BD', () => {
     activity: 'entrevista amanhã as 15 horas',
   };
 
-  const activityNew2 = {
+  const activityNewTwo = {
     activity: 'sair com amigos',
   };
 
@@ -34,7 +34,7 @@ describe('Insere um nova lista no BD', () => {
     });
 
     it('object possui id do nova lista inserida', async () => {
-      const result = await listModel.create(activityNew2);
+      const result = await listModel.create(activityNewTwo);
 
       expect(result).to.have.a.property('id');
     });

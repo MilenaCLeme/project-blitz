@@ -1,5 +1,5 @@
-const { MongoClient } = require('mongodb');
-const { MongoMemoryServer } = require('mongodb-memory-server');
+const {MongoClient} = require('mongodb');
+const {MongoMemoryServer} = require('mongodb-memory-server');
 
 const server = new MongoMemoryServer();
 
@@ -13,4 +13,4 @@ const getConnection = async () => {
   return MongoClient.connect(mockUrl, options);
 };
 
-module.exports = { getConnection };
+module.exports = {getConnection};
