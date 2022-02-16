@@ -43,3 +43,13 @@ describe('Insere um nova lista, verificar a regra de negocio', () => {
     });
   });
 });
+
+describe('gerar a lista de todas as tarefas', () => {
+  describe('caso ocorra sucesso, devera retornar', () => {
+    it('um array', async () => {
+      const result = await listServ.findAllServ();
+
+      expect(result).to.be.a('array');
+    });
+  });
+});

@@ -36,3 +36,14 @@ describe('Insere um nova lista no BD', () => {
     });
   });
 });
+
+describe('gerar a lista de todas as tarefas', () => {
+  describe('Quando for um sucesso', () => {
+    it('Retorna um array', async () => {
+      const result = await listModel.findAll();
+
+      expect(result).to.be.a('array');
+    });
+  });
+});
+
