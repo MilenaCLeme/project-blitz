@@ -1,24 +1,27 @@
 const sinon = require('sinon');
 const { expect } = require('chai');
-const { MongoClient, ConnectionCheckedInEvent } = require('mongodb');
+const { MongoClient } = require('mongodb');
 const { getConnection } = require('./mongomockconnection');
 
-const listModel = {
-  create: () => {}
-}
+const listModel = require('../../models/dolistmodel');
 
 describe('Insere um nova lista no BD', () => {
   let connectMock;
+
   const activityNew = {
     activity: 'entrevista amanhã as 15 horas',
   };
 
-  before(async() => {
+  const activityNew2 = {
+    activity: 'sair com amigos',
+  };
+
+  beforeAll(async () => {
     connectMock = await getConnection();
     sinon.stub(MongoClient, 'connect').resolves(connectMock);
   });
 
-  after(async() => {
+  afterAll(async () => {
     await connectMock.db('blitz').collection('list').drop();
     MongoClient.connect.restore();
   });
@@ -30,8 +33,8 @@ describe('Insere um nova lista no BD', () => {
       expect(result).to.be.a('object');
     });
 
-    it('object possui um id do nova lista inserida', async () => {
-      const result = await listModel.create(activityNew);
+    it('object possui id do nova lista inserida', async () => {
+      const result = await listModel.create(activityNew2);
 
       expect(result).to.have.a.property('id');
     });
