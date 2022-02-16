@@ -8,13 +8,9 @@ const listModel = require('../../models/dolistmodel');
 describe('Insere um nova lista no BD', () => {
   let connectMock;
 
-  const activityNew = {
-    activity: 'entrevista amanhã as 15 horas',
-  };
+  const activityNew = 'entrevista amanhã as 15 horas';
 
-  const activityNewTwo = {
-    activity: 'sair com amigos',
-  };
+  const activityNewTwo = 'sair com amigos';
 
   beforeAll(async () => {
     connectMock = await getConnection();

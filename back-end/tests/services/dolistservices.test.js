@@ -3,11 +3,15 @@ const {expect} = require('chai');
 const {MongoClient} = require('mongodb');
 const {getConnection} = require('../mongomockconnection');
 
+const listServ = require('../../services/dolistservices');
+
 
 describe('Insere um nova lista, verificar a regra de negocio', () => {
   let connectMock;
 
   const activityNew = 'entrevista amanhã as 15 horas';
+
+  const activityUndefined = undefined;
 
   beforeAll(async () => {
     connectMock = await getConnection();
@@ -31,10 +35,11 @@ describe('Insere um nova lista, verificar a regra de negocio', () => {
 
   describe('caso ocorra um error', () => {
     it('caso não escrever um activity', async () => {
-      const {stato, mensage}= await listServ.createServ();
+      console.log('entrouuu2');
+      const results = await listServ.createServ(activityUndefined);
 
-      expect(mensage).to.be.equal('not exist activity');
-      expect(stato).to.be.equal(200);
+      expect(results).to.have.a.property('status');
+      expect(results).to.have.a.property('message');
     });
   });
 });
