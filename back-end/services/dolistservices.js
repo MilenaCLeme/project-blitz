@@ -9,6 +9,13 @@ const createServ = async (activity) => {
   return createModel;
 };
 
+const findAllServ = async () => {
+  const findAllModel = await model.findAll();
+
+  return findAllModel;
+};
+
 module.exports = {
   createServ,
+  findAllServ,
 };
