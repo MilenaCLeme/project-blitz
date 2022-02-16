@@ -2,8 +2,11 @@ const connect = require('./connection');
 
 const create = async (activity) => {
   const db = await connect();
-  const result = await db.collection('list').insertOne(activity);
-  return result;
+  const { insertedId } = await db.collection('list').insertOne(activity);
+  console.log({ id: insertedId });
+  return {
+    id: insertedId,
+  };
 };
 
 module.exports = {

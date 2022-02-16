@@ -12,11 +12,11 @@ let db = null;
 
 const connection = () => (
   db ? Promise.resolve(db)
-  : MongoClient.connect(mongoUrl, options)
-  .then((conn) => {
-    db = conn.db('blitz');
-    return db;
-  })
+    : MongoClient.connect(mongoUrl, options)
+      .then((conn) => {
+        db = conn.db('blitz');
+        return db;
+      })
 );
 
 module.exports = connection;
