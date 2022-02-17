@@ -1,26 +1,20 @@
 const sinon = require('sinon');
 const {expect} = require('chai');
-const {MongoClient} = require('mongodb');
-const {getConnection} = require('../mongomockconnection');
 
+const model = require('../../models/dolistmodel');
 const listServ = require('../../services/dolistservices');
 
-
 describe('Insere um nova lista, verificar a regra de negocio', () => {
-  let connectMock;
-
   const activityNew = 'entrevista amanhã as 15 horas';
 
-  const activityUndefined = undefined;
+  beforeAll(() => {
+    const id = '604cb554311d68f491ba5781';
 
-  beforeAll(async () => {
-    connectMock = await getConnection();
-    sinon.stub(MongoClient, 'connect').resolves(connectMock);
+    sinon.stub(model, 'create').resolves({id, activity: activityNew});
   });
 
-  afterAll(async () => {
-    await connectMock.db('blitz').collection('list').drop();
-    MongoClient.connect.restore();
+  afterAll(() => {
+    sinon.restore();
   });
 
   describe('caso ocorra sucesso, devera retornar', () => {
@@ -35,8 +29,7 @@ describe('Insere um nova lista, verificar a regra de negocio', () => {
 
   describe('caso ocorra um error', () => {
     it('caso não escrever um activity', async () => {
-      console.log('entrouuu2');
-      const results = await listServ.createServ(activityUndefined);
+      const results = await listServ.createServ();
 
       expect(results).to.have.a.property('status');
       expect(results).to.have.a.property('message');
@@ -45,6 +38,14 @@ describe('Insere um nova lista, verificar a regra de negocio', () => {
 });
 
 describe('gerar a lista de todas as tarefas', () => {
+  beforeAll(() => {
+    sinon.stub(model, 'findAll').resolves([]);
+  });
+
+  afterAll(() => {
+    sinon.restore();
+  });
+
   describe('caso ocorra sucesso, devera retornar', () => {
     it('um array', async () => {
       const result = await listServ.findAllServ();
